@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'react-native-gesture-handler';
 import { Text, StyleSheet, View, Image, TouchableOpacity, Modal, Pressable, ScrollView, Button } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 const LoginScreen = ({ navigation }) => {
 
     const [username, setUsername] = useState('')
@@ -9,30 +10,25 @@ const LoginScreen = ({ navigation }) => {
     const [token, setToken] = useState(null)
     const [isPasswwordShow, setIsPasswordShow] = useState();
 
-    const onSubmit = async() =>{
-        await AsyncStorage.setItem('token',username )
+    const checkLogin = async() =>{
+        try {
+            const accessToken = await AsyncStorage.getItem('AcessToken',accessToken);
+            if (accessToken) {
+            navigation.replace("HomePage")
+              console.log('Người dùng đã đăng nhập');
+              
+            } else {
+                navigation.replace("SignUp")
+              console.log('Người dùng chưa đăng nhập');
         
-        if(username == 'admin' && password == '123456'){
-            console.log('Đăng nhập thành công')
-            navigation.navigate("HomePage")
-        }else{
-            navigation.navigate("SignUp")
-            console.log('Chưa đăng nhập tài khoản')
-           
-        }   
-    }
-
-    const tokenlogin = async() =>{
-        const value = await AsyncStorage.getItem('token')
-        if(value !== null){
-            navigation.navigate("HomePage")
-            console.log("log's")
-        }else{
-            navigation.navigate("SignUp")
-            console.log("log")
-        }
-    }
-    tokenlogin()
+            }
+          } catch (error) {
+            console.log('Lỗi khi kiểm tra trạng thái đăng nhập:', error);
+          }
+        };
+      
+        checkLogin();
+ 
     return (
         <ScrollView style={styles.container}>
             <View style={{ paddingTop: 20 }}>
@@ -49,14 +45,14 @@ const LoginScreen = ({ navigation }) => {
                 <View style={{ paddingTop: 10, }}>
                     <TouchableOpacity
                         style={styles.btnLogin}
-                        onPress={onSubmit}
+                        // onPress={onSubmit}
                     >
                         <Text style={styles.textLogin} >Login</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnRegis}
                         onPress={() => {
-                            navigation.navigate("Regis")
+                            navigation.navigate("SignUp")
                             console.log('chuyển qua trang đăng kí')
                         }}
                     >

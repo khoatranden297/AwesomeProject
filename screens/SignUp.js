@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from "axios";
-
+import { StatusBar } from 'react-native';
 
 const SignUpScreens = ({ navigation }) => {
     const [username, setUsername] = useState('')
@@ -18,55 +18,49 @@ const SignUpScreens = ({ navigation }) => {
 
     
 
-    const onLogin = async () =>{
+    const onLogin = async () => {
         try {
-            await axios.post('http://erp.lacty.com.vn:5000/user/login',{
-                username : username,
-                password :password,
-            }).then(async (response) =>{
-                await AsyncStorage.setItem("AcessToken",response.data.accessToken)
-                console.log('du lieu:',response.data)
-                console.log(response.data.accessToken)
-                
-                if(response.data.authenticated){
-                    navigation.navigate('HomePage')
-                }else{
-                    Alert.alert('sai','vui lòng đăng nhập lại')
-                }
-                
-              
-            })
-           
-           
-        } catch (error) {
-           
-        }
-
-    };
-
-    const saveData = async ()=>{
-       
+          await axios.post('http://erp.lacty.com.vn:5000/user/login', {
+            username: username,
+            password: password,
+          }).then(async (response) => {
+            await AsyncStorage.setItem("AcessToken", response.data.accessToken);
+            console.log('Dữ liệu:', response.data);
+            console.log(response.data.accessToken);
       
-       if(username == username && password == password){
-        console.log('lưu thành công')
-       }else{
-        console.log('lưu thất bại')
-       }
-       saveData()
-    }
-
+            if (response.data.authenticated) {
+              navigation.replace('HomePage');
+            } else {
+              Alert.alert('Sai', 'Vui lòng đăng nhập lại');
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      
+      const saveDataToAsyncStorage = async (accessToken, value) => {
+        try {
+          await AsyncStorage.setItem(accessToken, JSON.stringify(value));
+          console.log('Dữ liệu đã được lưu thành công vào AsyncStorage.');
+        } catch (error) {
+          console.log('Lỗi khi lưu dữ liệu vào AsyncStorage:', error);
+        }
+      };
+      const value = { key: 'AccessToken' };
+      saveDataToAsyncStorage("AccessToken",value);
     return (
         <ScrollView style={styles.container}>
-            <View >
+             <StatusBar backgroundColor="white" barStyle="dark-content" />
+            <View>
                 <TouchableOpacity
                     onPress={() => {
                         navigation.navigate("Login")
                         console.log('chuyển qua trang tiếp theo');
                     }
-                    }
-                >
-
-                    <Ionicons
+}
+>
+<Ionicons
                         style={{
                             marginTop: 10,
                             position: "absolute",
@@ -182,7 +176,7 @@ const SignUpScreens = ({ navigation }) => {
                                 width: "45%",
                                 borderBottomColor: 'grey',
                                 borderBottomWidth: 1,
-                            }}
+}}
                         />
                     </View>
                 </View>
@@ -201,7 +195,6 @@ const SignUpScreens = ({ navigation }) => {
                             source={require("../images/linkedin.png")}
                         />
                     </View>
-
                     <View style={styles.img3}>
                         <Image
                             style={styles.hinh2}

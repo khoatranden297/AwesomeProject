@@ -1,41 +1,84 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 
-const ColorChangingView = () => {
-  const [isViewActive, setViewActive] = useState(false);
+const TAB_WIDTH = 150;
+const TABS = ['Home', 'Search', 'Profile'];
 
-  const viewOpacity = useSharedValue(1);
-  const viewColor = useSharedValue('blue');
+export default function App() {
+  const offset = useSharedValue(-TAB_WIDTH);
 
-  const handleViewPress = () => {
-    setViewActive(!isViewActive);
-    viewOpacity.value = 0;
-    viewColor.value = isViewActive ? 'red' : 'blue';
-    viewOpacity.value = 1;
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: offset.value }],
+  }));
+  const handlePress = (tab) => {
+    const newOffset = (() => {
+      switch (tab) {
+        case 'Home':
+          return -TAB_WIDTH;
+        case 'Search':
+          return 0;
+        case 'Profile':
+          return TAB_WIDTH;
+        default:
+          return -TAB_WIDTH;
+      }
+    })();
+
+    offset.value = withTiming(newOffset);
   };
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: viewOpacity.value,
-      backgroundColor: withTiming(viewColor.value),
-    };
-  });
-
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={handleViewPress}>
-        <Animated.View style={[{ width: 200, height: 200 }, animatedStyle]} />
-      </TouchableOpacity>
-      <Text style={{ marginTop: 20 }}>
-        {isViewActive ? 'View Active' : 'View Inactive'}
-      </Text>
+    <View style={styles.container}>
+      <View style={styles.tabs}>
+        {TABS.map((tab, i) => (
+          <Pressable
+            key={tab}
+            style={
+              i !== TABS.length - 1 ? [styles.tab, styles.divider] : styles.tab
+            }
+            onPress={() => handlePress(tab)}>
+            <Text style={styles.tabLabel}>{tab}</Text>
+          </Pressable>
+        ))}
+      </View>
+      <Animated.View style={[styles.animatedBorder, animatedStyles]} />
     </View>
   );
-};
+}
 
-export default ColorChangingView;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  tabs: {
+    flexDirection: 'row',
+  },
+  tab: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: TAB_WIDTH,
+  },
+  tabLabel: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  divider: {
+    borderRightWidth: 1,
+    borderRightColor: '#ddd',
+  },
+  animatedBorder: {
+    height: 8,
+    width: 64,
+    backgroundColor: 'tomato',
+    borderRadius: 20,
+  },
+});
