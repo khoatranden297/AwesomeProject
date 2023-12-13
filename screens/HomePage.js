@@ -7,12 +7,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/FontAwesome6';
 import Sort from 'react-native-vector-icons/FontAwesome5';
 import Sync from 'react-native-vector-icons/AntDesign';
+
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withTiming,
 } from 'react-native-reanimated';
 import { StatusBar } from 'react-native'
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Location from 'react-native-vector-icons/FontAwesome6';
 import Notification from 'react-native-vector-icons/MaterialIcons';
@@ -40,25 +42,17 @@ const HomePage = ({ navigation,router }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [sortedData, setSortedData] = useState([])
     const [selectedTab, setSelectedTab] = useState("Exchange Rate");
-   
-    
-
+    const { t, i18n } = useTranslation();
     // ngày giờ
-
     const TAB_WIDTH = 100;
     const TABS = ['Exchange Rate', 'Trade', 'P2P', 'Tether(USDT)']; 
-
     // animation 
-
     const offset = useSharedValue(0);
-
     const animatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateX: offset.value }],
     }));
-
     const handlePress = (tab) => {
         setSelectedTab(tab);
-
         const newOffset = (() => {
             switch (tab) {
                 case 'Exchange Rate':
@@ -78,13 +72,9 @@ const HomePage = ({ navigation,router }) => {
         offset.value = withTiming(newOffset);
     };
     // animated Text
-    const textColorValue = useSharedValue(0);
-
     const handleLogout = async () => {
         try {
-      
           await AsyncStorage.removeItem('AccessToken');
-          
           navigation.navigate('SignUp')
           console.log('xóa thành công AccessToken')
         } catch (error) {
@@ -92,15 +82,12 @@ const HomePage = ({ navigation,router }) => {
         }
       };
    
-
     const handleToggleMenu = () => {
         setShowMenu(!showMenu);
     };
-
     useEffect(() => {
         const dataG = async () => {
             try {
-
                 const getData = await AsyncStorage.getItem("AcessToken");
                 console.log(getData);
 
@@ -108,15 +95,12 @@ const HomePage = ({ navigation,router }) => {
                     headers: {
                         'X-Access-Token': getData
                     },
-
                 })
                 const data = await response.data
                 console.log("res",data)
-
                 setData(data)
                 setSortedData(data);
             }
-
             catch (error) {
                 console.log(error)
 
@@ -124,22 +108,22 @@ const HomePage = ({ navigation,router }) => {
         }
         dataG();
     }, []);
-
-
     useEffect(() => {
         const searchResults = data.filter(item => item.id.toLowerCase().includes(searchText.toLowerCase()) || item.name.toLowerCase().includes(searchText.toLowerCase()));
         setSearchResults(searchResults);
         setFilteredResults([]);
     }, [searchText, data])
-
     const timKiem = (event) => {
         const keyword = event.target.value;
         setSearchText(keyword);
     };
 
-    useEffect(() => {
+    
 
-    });
+  const changeLanguage = () => {
+    const newLanguage = i18n.language === 'en' ? 'vi' : 'en';
+    i18n.changeLanguage(newLanguage);
+  };
     const handleSort = () => {
         const sortedData = searchResults.sort((a, b) => a.name.localeCompare(b.name))
         setShowMenu(false);
@@ -156,12 +140,10 @@ const HomePage = ({ navigation,router }) => {
     }
     renderItem = ({ item, index }) => {
         return (
-
             <TouchableOpacity onPress={(key) => {
                 navigation.navigate('UserScreens', { key: item.key,name:item.name });
                 console.log(key)
             }}>
-
                 <View style={styles.list1}>
                     <Icons
                         style={{
@@ -179,20 +161,16 @@ const HomePage = ({ navigation,router }) => {
                     </View>
                 </View>
             </TouchableOpacity>
-
         )
     }
     return (
-
         <SafeAreaView  >
-           
             <StatusBar backgroundColor="#f2f2f2" barStyle="dark-content" />
             <View
                 style={{
                     width: '100%',
                     height: 110,
                     backgroundColor: "#000099",
-                    
                 }}
             >
                 <View style={{ flexDirection: "row" }}>
@@ -200,8 +178,7 @@ const HomePage = ({ navigation,router }) => {
                         style={{
                             marginLeft: 10,
                             marginTop: 10,
-                        }}
-                    />
+                        }}/>
                     <Text
                         style={{
                             color: "white",
@@ -221,8 +198,7 @@ const HomePage = ({ navigation,router }) => {
                         style={{
                             marginLeft: 20,
                             marginTop: 10,
-                        }}
-                    />
+                        }}/>
                     <TouchableOpacity onPress={handleLogout}>
                     <Global name="globe" size={20} color="white"
                         style={{
@@ -230,11 +206,8 @@ const HomePage = ({ navigation,router }) => {
                             marginTop: 10,
                         }}
                     />
-                    </TouchableOpacity>
-
-                    
+                    </TouchableOpacity>                    
                 </View>
-
                 <View style={styles.containerS}>
                     <Icon name="search" size={20} color="white" style={{ marginBottom: 5, }} />
                     <TextInput
@@ -245,7 +218,6 @@ const HomePage = ({ navigation,router }) => {
                         onChangeText={(val) => setSearchText(val)}
                         onSubmitEditing={timKiem}
                     />
-
                 </View>
             </View>
             <View style={{
@@ -274,7 +246,6 @@ const HomePage = ({ navigation,router }) => {
                 <Animated.View style={[styles.animatedBorder, animatedStyles]} />
                 
             </View>
-
             <View style={{ flexDirection: "row",
                            width:"100%",
                            height:60,
@@ -326,17 +297,14 @@ const HomePage = ({ navigation,router }) => {
                       
                        }}
                     />
-                
                     </TouchableOpacity >
-                    
                     <TouchableOpacity  onPress={handleToggleMenu}>
                     <Sort name = "sort-alpha-up-alt" color ="grey" size ={20}
                        style ={{
                         marginLeft:30,
-                        marginTop:20,
-                      
+                        marginTop:20,                     
                        }}
-                    />
+/>
                     <Modal visible={showMenu} 
                         transparent = {true}
                         animationType="fade"
@@ -344,12 +312,9 @@ const HomePage = ({ navigation,router }) => {
                         <TouchableOpacity
                             style={styles.menuContainer}
                             activeOpacity={1}
-
                         >
-
                             <View style={styles.menu}>
                                 <TouchableOpacity onPress={handleSort} 
-                                
                                 >
                                     <Text
                                     style ={{
@@ -372,19 +337,14 @@ const HomePage = ({ navigation,router }) => {
                             </View>
                         </TouchableOpacity>
                     </Modal>
-                
                     </TouchableOpacity>
-                
                 </View>               
             <FlatList
                 data={searchResults}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
+                keyExtractor={item => item.id}/>
         </SafeAreaView>
-
     )
-
 }
 export default HomePage
 const styles = StyleSheet.create({
@@ -394,12 +354,9 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
 
     },
-
     imgH: {
         width: "100%",
         height: 100,
-
-
     },
     txt1: {
         marginTop: 35,
@@ -417,8 +374,6 @@ const styles = StyleSheet.create({
         right: 12,
         marginRight: 20,
         marginTop: 30,
-
-
     },
     txtC: {
         fontSize: 15,
@@ -438,12 +393,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         elevation: 5,
         opacity: 0.8
-
-
-
     },
     txtK: {
-        fontSize: 20,
+        fontSize: 16.5,
         width: "100%",
         height: 30,
         fontWeight: "500",
@@ -452,12 +404,10 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 15,
         textDecorationLine: "underline",
-
-
     },
     txtH: {
 
-        fontSize: 15,
+        fontSize: 14,
         height: 30,
         color: "#0d0d0d",
         marginLeft: 20,
@@ -485,7 +435,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 50,
         height: 40,
-
     },
     button: {
         backgroundColor: "#b3e0ff",
@@ -518,7 +467,6 @@ const styles = StyleSheet.create({
      
     },
     menu: {
-       
         width:"100%",
         height:130,
         backgroundColor: '#FFF',
@@ -535,14 +483,12 @@ const styles = StyleSheet.create({
         height:45,
       },
       tabLabel: {
-        
         marginTop:10,
         fontSize: 13,
         textAlign: 'center',
         fontWeight: 'bold',
       },
       divider: {
-       
         borderRightColor: '#ddd',
       },
       animatedBorder: {

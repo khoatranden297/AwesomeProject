@@ -8,6 +8,8 @@ import { Rating } from 'react-native-ratings';
 import Back from 'react-native-vector-icons/Ionicons';
 import Dots from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import Swiper from 'react-native-swiper';
 import Logout from 'react-native-vector-icons/MaterialIcons';
 import Dates from 'react-native-vector-icons/Fontisto';
 import Birthday from 'react-native-vector-icons/FontAwesome';
@@ -81,7 +83,6 @@ const UserDetail = ({ route, }) => {
         // Lưu giá trị đánh giá vào trạng thái hoặc gửi lên máy chủ
     };
     //animaition
-
     const offset = useSharedValue(0);
     const animatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateX: offset.value }],
@@ -187,8 +188,6 @@ const UserDetail = ({ route, }) => {
                     style={{
                         width: "100%",
                         height: '100%',
-
-
                     }}
                     source={require('../images/city.jpg')}
                     imageStyle={{ borderRadius: 15, }}
@@ -392,11 +391,9 @@ const UserDetail = ({ route, }) => {
                        Log out: 
                     </Text>
                     </TouchableOpacity>
-                
                     </View>   
                     </View>
                     <View style ={{
-                    
                     backgroundColor:"#ffffff"
 
                 }}>
@@ -412,13 +409,10 @@ const UserDetail = ({ route, }) => {
                 >Date</Text>
                 <View style ={{
                     flexDirection:"row",
-                    backgroundColor:"white",
-                    
+                    backgroundColor:"white",   
                     borderBottomWidth:1,
                     borderColor:"#e6e6e6",
                     paddingBottom:5,
-                    
-
                 }}>
                     <Birthday name ="birthday-cake" size ={20} color="#bfbfbf"
                         style ={{
@@ -432,8 +426,7 @@ const UserDetail = ({ route, }) => {
                             fontWeight:"500",
                             marginLeft:15,
                             marginTop:15,
-                            textAlign:"center"
-                            
+                            textAlign:"center" 
                      }}
                     >
                        Birthday
@@ -538,8 +531,7 @@ const UserDetail = ({ route, }) => {
                             justifyContent:"center",
                             textAlign:"left",
                             height:80,
-}}
->
+}}>
                     {data[0]?.address}
                     </Text>
                     </View>   

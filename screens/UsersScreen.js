@@ -108,7 +108,6 @@ const UsersScreen = ({ route, navigation }) => {
 
             catch (error) {
                 console.log(error)
-
             }
         }
         dataG();
@@ -119,7 +118,6 @@ const UsersScreen = ({ route, navigation }) => {
             item.name.toLowerCase().includes(searchText.toLowerCase())
             // item.department_detail.toLowerCase().includes(searchText.toLowerCase())
         ));
-
         setSearchResults(searchResults);
         setFilteredResults([]);
     }, [searchText, data])
@@ -151,7 +149,7 @@ const UsersScreen = ({ route, navigation }) => {
     };
     const handleRatingChange = (value) => {
         setRating(value);
-        // Lưu giá trị đánh giá vào trạng thái hoặc gửi lên máy chủ
+       
     };
     renderItem = ({ item, index }) => {
         let iconColor = "#6699ff";
@@ -215,9 +213,6 @@ const UsersScreen = ({ route, navigation }) => {
                                 width: 230,
                                 marginLeft: 20,
                                 textAlign: "left",
-                                
-
-
                             }}>
                                 {item.name}
                             </Text>
@@ -236,7 +231,7 @@ const UsersScreen = ({ route, navigation }) => {
                             imageSize={15}
                             startingValue={rating}
                             onFinishRating={handleRatingChange}
-                            ratingColor='grey'
+                            ratingColor='grey'  
                             selectedColor="#e6b800"
                             starStyle={{ borderColor: '#ccad00', borderWidth: 4 }}
                             ratingBackgroundColor='#e6e6e6'
@@ -390,12 +385,9 @@ const UsersScreen = ({ route, navigation }) => {
                         <TouchableOpacity
                             style={styles.menuContainer}
                             activeOpacity={1}
-
                         >
-
                             <View style={styles.menu}>
                             <TouchableOpacity onPress={handleSort} 
-                                
                                 >
                                     <Text
                                     style ={{

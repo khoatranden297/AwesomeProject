@@ -12,9 +12,9 @@ const LoginScreen = ({ navigation }) => {
 
     const checkLogin = async() =>{
         try {
-            const accessToken = await AsyncStorage.getItem('AcessToken',accessToken);
-            if (accessToken) {
-            navigation.replace("HomePage")
+            const password = await AsyncStorage.getItem('AcessToken',password);
+            if (password) {
+            navigation.replace("Pass")
               console.log('Người dùng đã đăng nhập');
               
             } else {

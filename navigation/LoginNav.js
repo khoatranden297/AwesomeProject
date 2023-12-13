@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, StyleSheet, View, Image, Box, TouchableOpacity, ImageBackground, Modal, Pressable, ScrollView, EditText } from 'react-native'
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useTransition } from 'react'
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Heart1 from 'react-native-vector-icons/AntDesign';
@@ -13,14 +13,17 @@ import HomePage from '../screens/HomePage';
 import UsersScreen from '../screens/UsersScreen'
 import Details from '../screens/DetailPage';
 import Heart from '../screens/Heart';
+import Pass from '../screens/Password'
 import UserDetail from '../screens/UserDetailScreen'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+
 const Tab = createBottomTabNavigator(); 
 const Stack = createStackNavigator();
 const Loginavigation = (navigationRef) => {
+    // const (t)= useTransition();
     useEffect(() => {
         checkLogin();
       }, []);
@@ -55,6 +58,8 @@ const Loginavigation = (navigationRef) => {
                     />
                 <Stack.Screen name="SignUp"
                     component={SignUp} />
+                         <Stack.Screen name="Pass"
+                    component={Pass} />
                 <Stack.Screen name="HomePage"
                     component={Home} />
                 <Stack.Screen name="UserScreens"
