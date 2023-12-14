@@ -1,0 +1,21 @@
+{
+    "Buy":"Mua",
+    "Sell":"Bán",
+    "AGE":"Tuổi",
+    "Off":"Nghỉ",
+    "Work":"Làm",
+    "Call":"Gọi",
+    "Message":"Tin nhắn",
+    "Phone":"Điện Thoại",
+    "Email":"Email",
+    "SMS":"SMS",
+    "Pass":"Mk",
+    "Address":"Địa chỉ",
+    "AccountDetails":"Thông tin tài khoản",
+    "AccountType" :"Loại tài khoản",
+    "Logout":"Đăng xuất",
+    "Date" :"Ngày",
+    "Birthday" :"Sinh nhật",
+    "Datecome" :"Ngày đến"
+
+}

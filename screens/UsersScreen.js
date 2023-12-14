@@ -35,7 +35,6 @@ const TABS = ['Sarafy', 'Sarafy Ad', 'Save'];
 const UsersScreen = ({ route, navigation }) => {
     const { key, name ,id} = route.params
     console.log(name)
-
     const [isNotificattion, setIsNotificattion] = useState();
     const [data, setData] = useState([]);
     const [searchText, setSearchText] = useState('')

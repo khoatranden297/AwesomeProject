@@ -1,0 +1,21 @@
+{
+    "Buy":"Buy",
+    "Sell":"Sell",
+    "AGE":"AGE",
+    "Off":"Off",
+    "Work":"Work",
+    "Call":"Call",
+    "Message":"Message",
+    "Phone":"Phone",
+    "Email":"Email",
+    "SMS":"SMS",
+    "Pass":"Pass",
+    "Address":"Address",
+    "AccountDetails":"Account Details",
+    "AccountType" :"Account Type",
+    "Logout":"Log out",
+    "Date" :"Date",
+    "Birthday" :"Birthday",
+    "Datecome" :"Date come"
+
+}

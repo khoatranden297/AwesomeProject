@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { AppRegistry } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, StyleSheet, View, Image, Box, TouchableOpacity, ImageBackground, Modal, Pressable, ScrollView, EditText } from 'react-native'
