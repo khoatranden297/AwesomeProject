@@ -121,7 +121,7 @@ const SignUpScreens = ({ navigation }) => {
                             }}
                         >
                             <TextInput
-                                value={password}
+                                value={password}    
                                 onChangeText={text => setPassword(text)}
                                 placeholder='Enter Password'
                                 placeholderTextColor={"#ffffff"}
